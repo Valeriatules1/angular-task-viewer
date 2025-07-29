@@ -1,6 +1,8 @@
 import { Component, computed, signal, effect } from '@angular/core';
 import { TASKS, USERS, PROJECTS } from '../services/mock-data';
 import { currentUserSignal } from '../services/user-context';
+import { Router, ActivatedRoute } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-task-list',
@@ -8,6 +10,9 @@ import { currentUserSignal } from '../services/user-context';
   templateUrl: './task-list.component.html',
 })
 export class TaskListComponent {
+  readonly router = inject(Router);
+  readonly route = inject(ActivatedRoute);
+
   tasks = signal(TASKS);
   users = USERS;
   projects = PROJECTS;
@@ -46,11 +51,40 @@ export class TaskListComponent {
   // Filter handlers
   setProject(id: string) {
     this.filterProjectId(id ? +id : null);
+    this.pushQueryParams();
   }
   setStatus(status: string) {
     this.filterStatus(status || null);
+    this.pushQueryParams();
   }
   setAssignee(id: string) {
     this.filterAssigneeId(id ? +id : null);
+    this.pushQueryParams();
   }
+
+  // Helper function:
+  pushQueryParams() {
+    if (this.currentUser().role !== 'Admin') return;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        projectId: this.filterProjectId() || undefined,
+        status: this.filterStatus() || undefined,
+        assigneeId: this.filterAssigneeId() || undefined,
+      },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+
+  constructor() {
+  // sync filter state from URL on init (Admin only)
+  if (this.currentUser().role === 'Admin') {
+    this.route.queryParams.subscribe(params => {
+      this.filterProjectId(params['projectId'] ? +params['projectId'] : null);
+      this.filterStatus(params['status'] || null);
+      this.filterAssigneeId(params['assigneeId'] ? +params['assigneeId'] : null);
+    });
+  }
+}
 }
