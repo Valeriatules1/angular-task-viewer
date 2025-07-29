@@ -5,25 +5,16 @@ import { Task } from '../models/task.model';
 export class TaskService {
     // Mock tasks
     private _tasks = signal<Task[]>([
-        { id: 1, title: 'Setup project', status: 'Open', assigneeId: 1, deadline: '2025-08-15', projectName: 'Alpha' },
-        { id: 2, title: 'Fix bug #123', status: 'In Progress', assigneeId: 2, deadline: '2025-08-10', projectName: 'Beta' },
-        { id: 3, title: 'Fix bug #123', status: 'In Progress', assigneeId: 3, deadline: '2025-08-10', projectName: 'Beta' },
-        { id: 4, title: 'Fix bug #123', status: 'In Progress', assigneeId: 4, deadline: '2025-08-10', projectName: 'Beta' },
-        { id: 5, title: 'Fix bug #123', status: 'In Progress', assigneeId: 5, deadline: '2025-08-10', projectName: 'Beta' },
-        { id: 6, title: 'Fix bug #123', status: 'In Progress', assigneeId: 6, deadline: '2025-08-10', projectName: 'Beta' },
-        { id: 7, title: 'Fix bug #123', status: 'In Progress', assigneeId: 7, deadline: '2025-08-10', projectName: 'Beta' },
-        // Add more mock tasks here
-
-        /*{ id: 1, title: 'Fix login bug', status: 'Open', assigneeId: 1, deadline: '2025-08-02', projectId: 1 },
-        { id: 2, title: 'Design dashboard', status: 'In Progress', assigneeId: 2, deadline: '2025-08-04', projectId: 1 },
-        { id: 3, title: 'Deploy v2.0', status: 'Completed', assigneeId: 1, deadline: '2025-08-06', projectId: 2 },
-        { id: 4, title: 'Create onboarding doc', status: 'Open', assigneeId: 1, deadline: '2025-08-08', projectId: 1 },
-        { id: 5, title: 'Update tests', status: 'In Progress', assigneeId: 2, deadline: '2025-08-10', projectId: 2 },
-        { id: 6, title: 'Sprint planning', status: 'Open', assigneeId: 3, deadline: '2025-08-12', projectId: 2 },
-        { id: 7, title: 'Review code', status: 'Completed', assigneeId: 1, deadline: '2025-08-14', projectId: 1 },
-        { id: 8, title: 'Database migration', status: 'Open', assigneeId: 2, deadline: '2025-08-16', projectId: 1 },
-        { id: 9, title: 'Refactor services', status: 'In Progress', assigneeId: 3, deadline: '2025-08-18', projectId: 2 },
-        { id: 10, title: 'Feedback meeting', status: 'Completed', assigneeId: 1, deadline: '2025-08-20', projectId: 1 },*/
+        { id: 1, title: 'Fix login bug', status: 'Open', assigneeId: 1, deadline: '2025-08-02', projectName: 'Alpha' },
+        { id: 2, title: 'Design dashboard', status: 'In Progress', assigneeId: 2, deadline: '2025-08-04', projectName: 'Angular' },
+        { id: 3, title: 'Deploy v2.0', status: 'Done', assigneeId: 1, deadline: '2025-08-06', projectName: 'React' },
+        { id: 4, title: 'Create onboarding doc', status: 'Open', assigneeId: 1, deadline: '2025-08-08', projectName: 'PHP' },
+        { id: 5, title: 'Update tests', status: 'In Progress', assigneeId: 2, deadline: '2025-08-10', projectName: 'Laravel' },
+        { id: 6, title: 'Sprint planning', status: 'Open', assigneeId: 3, deadline: '2025-08-12', projectName: 'Android' },
+        { id: 7, title: 'Review code', status: 'Done', assigneeId: 1, deadline: '2025-08-14', projectName: 'Python' },
+        { id: 8, title: 'Database migration', status: 'Open', assigneeId: 2, deadline: '2025-08-16', projectName: 'C#' },
+        { id: 9, title: 'Refactor services', status: 'In Progress', assigneeId: 3, deadline: '2025-08-18', projectName: 'Vue' },
+        { id: 10, title: 'Feedback meeting', status: 'Done', assigneeId: 1, deadline: '2025-08-20', projectName: 'Next' },
     ]);
     tasks = this._tasks.asReadonly();
 

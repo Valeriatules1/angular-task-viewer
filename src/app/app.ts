@@ -12,7 +12,7 @@ import { TaskFiltersComponent } from './components/task-filters/task-filters';
   standalone: true,
   imports: [TaskListComponent, TaskFiltersComponent],
   template: `
-    <div class="p-4 max-w-7xl mx-auto">
+    <div class="md:top-6 p-4 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900 transition-colors">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Role-Based Task View</h1>
         <button (click)="roleService.toggleRole()" class="btn btn-primary">
@@ -43,44 +43,38 @@ export class AppComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  // Use a single signal for queryParams
   private queryParamsSignal = toSignal(this.route.queryParams);
 
   currentRole = this.roleService.currentRole;
 
-  projects = ['Alpha', 'Beta'];
+  projects = ['Alpha', 'Angular', 'React', 'PHP', 'Laravel', 'Android', 'Python', 'C#', 'Vue', 'Next'];
   statuses = ['Open', 'In Progress', 'Done'];
   assignees = [
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' }
   ];
 
-  // Use toSignal to convert Observable queryParams into a signal
-  private queryParams = toSignal(this.route.queryParams);
-
-  // Computed that combines role and filtered tasks
   filteredAndRoleFilteredTasks = computed(() => {
     const role = this.currentRole();
     let filtered = this.taskService.filteredTasks();
     if (role === 'WORKER') {
-      filtered = filtered.filter(t => t.assigneeId === 2); // demo current worker userId = 2
+      filtered = filtered.filter(t => t.assigneeId === 2);
     }
     return filtered;
   });
 
-  // constructor() {
-  //   effect(() => {
-  //     const params = this.queryParamsSignal();
-
-  //     // Safely handle null/undefined or empty strings
-  //     this.taskService.filterProject.set(params['project']?.toString() || null);
-  //     this.taskService.filterStatus.set(params['status']?.toString() || null);
-
-  //     const assignee = params['assignee'];
-  //     this.taskService.filterAssignee.set(
-  //       assignee != null && assignee !== '' ? +assignee : null
-  //     );
-  //   });
-  // }
+  /*constructor() {
+    effect(() => {
+      const params = this.queryParamsSignal();
+      this.taskService.filterProject.set(params['project']?.toString() || null);
+      this.taskService.filterStatus.set(params['status']?.toString() || null);
+      const assignee = params['assignee'];
+      this.taskService.filterAssignee.set(
+        assignee != null && assignee !== '' ? +assignee : null
+      );
+    });
+  }*/
 
   updateFilter(type: 'project' | 'status' | 'assignee', value: string | number | null) {
     if (type === 'project') this.taskService.filterProject.set(value as string | null);

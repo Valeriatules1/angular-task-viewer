@@ -27,7 +27,7 @@ import { Task } from '../../models/task.model';
             <td class="p-2 border border-gray-300 hidden md:table-cell">{{ getAssigneeName(task.assigneeId) }}</td>
             <td class="p-2 border border-gray-300 hidden lg:table-cell">{{ task.deadline | date }}</td>
             <td class="p-2 border border-gray-300 hidden lg:table-cell">{{ task.projectName }}</td>
-            <td class="p-2 border border-gray-300 relative">
+            <td class="p-2 border border-gray-300 lg:table-cell relative">
               <app-task-row-actions
                 [isAdmin]="isAdmin"
                 (view)="onView(task)"
